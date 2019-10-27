@@ -5,6 +5,8 @@
   >
     <Header />
     <Hero />
+    <Recipes />
+    <Emotion />
     <Footer />
   </div>
 </template>
@@ -14,6 +16,8 @@ import Vue from "vue";
 import { createComponent } from "@vue/composition-api";
 import Header from "./components/Header.vue";
 import Hero from "./components/Hero.vue";
+import Recipes from "./components/Recipes.vue";
+import Emotion from "./components/Emotion.vue";
 import Footer from "./components/Footer.vue";
 
 export default createComponent({
@@ -21,6 +25,8 @@ export default createComponent({
   components: {
     Header,
     Hero,
+    Recipes,
+    Emotion,
     Footer
   }
 });
@@ -37,4 +43,18 @@ export default createComponent({
 
 .gradient
   background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+
+h3
+  margin 40px 0 0
+
+ul
+  list-style-type none
+  padding 0
+
+li
+  display inline-block
+  margin 0 10px
+
+a
+  color #42b983
 </style>
