@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div
+    class="leading-normal tracking-normal text-white gradient"
+    style="font-family: 'Source Sans Pro', sans-serif;"
+  >
     <Header />
-    <main class="my-16 mx-auto">
-      <router-view />
-    </main>
     <Hero />
     <Footer />
   </div>
@@ -34,4 +34,7 @@ export default createComponent({
   text-align center
   color #2c3e50
   margin-top 60px
+
+.gradient
+  background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
 </style>
