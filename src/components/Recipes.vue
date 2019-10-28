@@ -107,10 +107,19 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { createComponent } from "@vue/composition-api";
+import { createComponent, onMounted } from "@vue/composition-api";
+import axios from "axios";
+import domain from "../utils/domain";
 
 export default createComponent({
-  name: "Recipes"
+  name: "Recipes",
+  setup() {
+    onMounted(() => {
+      axios.get(`${domain}/api/recipes`).then(data => {
+        // console.log("DATA", data);
+      });
+    });
+  }
 });
 </script>
 
