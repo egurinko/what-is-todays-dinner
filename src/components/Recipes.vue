@@ -62,19 +62,11 @@ import useLoader from "../store/useLoader";
 export default createComponent({
   name: "Recipes",
   setup() {
-    const { recipes, getRecipes } = useRecipes();
+    const { recipes, initRecipes } = useRecipes();
     const { changeToLoading, changeToLoaded } = useLoader();
 
     onMounted(() => {
-      changeToLoading();
-      axios
-        .get(`${domain}/api/recipes`)
-        .then(data => {
-          getRecipes(data.data);
-        })
-        .finally(() => {
-          changeToLoaded();
-        });
+      initRecipes();
     });
 
     return {

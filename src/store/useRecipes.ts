@@ -1,8 +1,10 @@
 import Vue from "vue";
-import VueCompositionApi from "@vue/composition-api";
+import axios from "axios";
+import VueCompositionApi, { ref } from "@vue/composition-api";
 Vue.use(VueCompositionApi);
 
-import { ref } from "@vue/composition-api";
+import useLoader from "./useLoader";
+import domain from "../utils/domain";
 
 export type Recipe = {
   foodImageUrl: string;
@@ -27,13 +29,22 @@ export type Recipes = Recipe[];
 const recipes = ref<Recipes>([]);
 
 const useRecipes = () => {
-  const getRecipes = (newRecipes: Recipes) => {
-    recipes.value = newRecipes;
+  const initRecipes = () => {
+    const { changeToLoading, changeToLoaded } = useLoader();
+    changeToLoading();
+    axios
+      .get(`${domain}/api/recipes`)
+      .then(data => {
+        recipes.value = data.data;
+      })
+      .finally(() => {
+        changeToLoaded();
+      });
   };
 
   return {
     recipes,
-    getRecipes
+    initRecipes
   };
 };
 
