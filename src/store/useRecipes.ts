@@ -1,5 +1,5 @@
 import Vue from "vue";
-import VueCompositionApi from '@vue/composition-api';
+import VueCompositionApi from "@vue/composition-api";
 Vue.use(VueCompositionApi);
 
 import { ref } from "@vue/composition-api";
@@ -22,14 +22,14 @@ export type Recipe = {
   recipeTitle: string;
 }
 
-export type Recipes = Recipe[]
+export type Recipes = Recipe[];
 
 const recipes = ref<Recipes>([]);
 
 const useRecipes = () => {
   const getRecipes = (newRecipes: Recipes) => {
     recipes.value = newRecipes;
-  }
+  };
 
   return {
     recipes,
