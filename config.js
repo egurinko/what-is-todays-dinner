@@ -1,5 +1,5 @@
 require("dotenv").config();
-const domain = process.env.MONGO_URL;
+const domain = process.env.MONGODB_URI;
 const dbName = process.env.DB_NAME;
 
 const env = process.env.NODE_ENV;
