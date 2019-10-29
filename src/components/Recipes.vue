@@ -11,94 +11,40 @@
           class="h-1 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t"
         ></div>
       </div>
-
-      <div class="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
+      <div
+        class="w-full md:w-1/3 p-6 flex flex-col flex-shrink"
+        v-for="(recipe, index) in recipes"
+        :key="index"
+      >
         <div
           class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
         >
-          <a href="#" class="flex flex-wrap no-underline hover:no-underline">
-            <p class="w-full text-gray-600 text-xs md:text-sm px-6">
-              xGETTING STARTED
-            </p>
-            <div class="w-full font-bold text-xl text-gray-800 px-6">
-              Lorem ipsum dolor sit amet.
+          <a
+            :href="recipe.recipeUrl"
+            class="flex flex-wrap no-underline hover:no-underline"
+          >
+            <img
+              class="h-56 w-full object-cover object-center"
+              :src="recipe.foodImageUrl"
+              alt="recipeTitle"
+            />
+            <div class="w-full font-bold text-xl text-gray-800 px-6 mt-4">
+              {{ recipe.recipeTitle }}
             </div>
-            <p class="text-gray-800 text-base px-6 mb-5">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              at ipsum eu nunc commodo posuere et sit amet ligula.
+            <p class="text-gray-800 text-base px-6 mb-2">
+              {{ recipe.recipeDescription }}
             </p>
           </a>
         </div>
         <div
-          class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
+          class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow  px-6 py-3"
         >
-          <div class="flex items-center justify-start">
-            <button
-              class="mx-auto lg:mx-0 hover:underline gradient text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg"
-            >
-              Action
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
-        <div
-          class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
-        >
-          <a href="#" class="flex flex-wrap no-underline hover:no-underline">
-            <p class="w-full text-gray-600 text-xs md:text-sm px-6">
-              xGETTING STARTED
-            </p>
-            <div class="w-full font-bold text-xl text-gray-800 px-6">
-              Lorem ipsum dolor sit amet.
-            </div>
-            <p class="text-gray-800 text-base px-6 mb-5">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              at ipsum eu nunc commodo posuere et sit amet ligula.
-            </p>
-          </a>
-        </div>
-        <div
-          class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
-        >
-          <div class="flex items-center justify-center">
-            <button
-              class="mx-auto lg:mx-0 hover:underline gradient text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg"
-            >
-              Action
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
-        <div
-          class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
-        >
-          <a href="#" class="flex flex-wrap no-underline hover:no-underline">
-            <p class="w-full text-gray-600 text-xs md:text-sm px-6">
-              xGETTING STARTED
-            </p>
-            <div class="w-full font-bold text-xl text-gray-800 px-6">
-              Lorem ipsum dolor sit amet.
-            </div>
-            <p class="text-gray-800 text-base px-6 mb-5">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              at ipsum eu nunc commodo posuere et sit amet ligula.
-            </p>
-          </a>
-        </div>
-        <div
-          class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
-        >
-          <div class="flex items-center justify-end">
-            <button
-              class="mx-auto lg:mx-0 hover:underline gradient text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg"
-            >
-              Action
-            </button>
-          </div>
+          <span class="text-gray-600 text-base mr-4">
+            調理時間：{{ recipe.recipeIndication }}
+          </span>
+          <span class="text-gray-600 text-base">
+            1食あたり：{{ recipe.recipeCost }}
+          </span>
         </div>
       </div>
     </div>
@@ -110,15 +56,23 @@ import Vue from "vue";
 import { createComponent, onMounted } from "@vue/composition-api";
 import axios from "axios";
 import domain from "../utils/domain";
+import useRecipes from "../store/useRecipes";
 
 export default createComponent({
   name: "Recipes",
   setup() {
+    const { recipes, getRecipes } = useRecipes();
+
     onMounted(() => {
       axios.get(`${domain}/api/recipes`).then(data => {
-        // console.log("DATA", data);
+        console.log(data);
+        getRecipes(data.data);
       });
     });
+
+    return {
+      recipes
+    };
   }
 });
 </script>
