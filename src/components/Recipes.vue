@@ -57,17 +57,24 @@ import { createComponent, onMounted } from "@vue/composition-api";
 import axios from "axios";
 import domain from "../utils/domain";
 import useRecipes from "../store/useRecipes";
+import useLoader from "../store/useLoader";
 
 export default createComponent({
   name: "Recipes",
   setup() {
     const { recipes, getRecipes } = useRecipes();
+    const { changeToLoading, changeToLoaded } = useLoader();
 
     onMounted(() => {
-      axios.get(`${domain}/api/recipes`).then(data => {
-        console.log(data);
-        getRecipes(data.data);
-      });
+      changeToLoading();
+      axios
+        .get(`${domain}/api/recipes`)
+        .then(data => {
+          getRecipes(data.data);
+        })
+        .finally(() => {
+          changeToLoaded();
+        });
     });
 
     return {

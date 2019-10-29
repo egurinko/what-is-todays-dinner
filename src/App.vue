@@ -5,6 +5,7 @@
   >
     <Header />
     <Hero />
+    <Loader :loading="loader" />
     <Recipes />
     <Emotion />
     <Footer />
@@ -14,15 +15,18 @@
 <script lang="ts">
 import Vue from "vue";
 import { createComponent } from "@vue/composition-api";
+import PacmanLoader from "vue-spinner/src/PacmanLoader.vue";
 import Header from "./components/Header.vue";
 import Hero from "./components/Hero.vue";
 import Recipes from "./components/Recipes.vue";
 import Emotion from "./components/Emotion.vue";
 import Footer from "./components/Footer.vue";
+import Loader from "./components/Loader.vue";
 
 export default createComponent({
   name: "app",
   components: {
+    Loader,
     Header,
     Hero,
     Recipes,
