@@ -26,25 +26,19 @@ export type Recipe = {
 
 export type Recipes = Recipe[];
 
-const recipes = ref<Recipes>([]);
+const currentRecipes = ref<Recipes>([]);
+const allRecipes = ref<Recipes>([]);
 
 const useRecipes = () => {
-  const initRecipes = () => {
-    const { changeToLoading, changeToLoaded } = useLoader();
-    changeToLoading();
-    axios
-      .get(`${domain}/api/recipes`)
-      .then(data => {
-        recipes.value = data.data;
-      })
-      .finally(() => {
-        changeToLoaded();
-      });
+  const initRecipes = (recipes: Recipes) => {
+    currentRecipes.value = recipes;
+    allRecipes.value = recipes;
   };
 
   return {
-    recipes,
-    initRecipes
+    allRecipes,
+    currentRecipes,
+    initRecipes,
   };
 };
 

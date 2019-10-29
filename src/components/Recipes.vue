@@ -13,7 +13,7 @@
       </div>
       <div
         class="w-full md:w-1/3 p-6 flex flex-col flex-shrink"
-        v-for="(recipe, index) in recipes"
+        v-for="(recipe, index) in currentRecipes"
         :key="index"
       >
         <div
@@ -53,27 +53,42 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { createComponent, onMounted } from "@vue/composition-api";
 import axios from "axios";
-import domain from "../utils/domain";
+import { createComponent, onMounted } from "@vue/composition-api";
 import useRecipes from "../store/useRecipes";
 import useLoader from "../store/useLoader";
+import domain from "../utils/domain";
 
 export default createComponent({
   name: "Recipes",
+  components: {},
   setup() {
-    const { recipes, initRecipes } = useRecipes();
-    const { changeToLoading, changeToLoaded } = useLoader();
+    const { currentRecipes, initRecipes } = useRecipes();
 
     onMounted(() => {
-      initRecipes();
+      init();
     });
 
     return {
-      recipes
+      currentRecipes
     };
   }
 });
+
+const init = () => {
+  const { changeToLoading, changeToLoaded } = useLoader();
+  const { initRecipes } = useRecipes();
+
+  changeToLoading();
+  axios
+    .get(`${domain}/api/recipes`)
+    .then(data => {
+      initRecipes(data.data);
+    })
+    .finally(() => {
+      changeToLoaded();
+    });
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
