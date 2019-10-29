@@ -4,9 +4,21 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
+const cron = require("node-cron");
+const fs = require("fs");
 const apiRouter = require("./routes")();
+const makeRecipes = require("./services/makeRecipes");
 
 const app = express();
+
+let n = 39;
+
+// cron.schedule("*/10 * * * * *", () => {
+//   console.log("Making a comfort index");
+//   makeRecipes(n);
+//   n++;
+//   console.log("CATEGORY ID", n);
+// });
 
 // LOGGING SETTINGs
 app.use(
