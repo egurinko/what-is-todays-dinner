@@ -79,13 +79,14 @@
 <script lang="ts">
 import Vue from "vue";
 import { createComponent } from "@vue/composition-api";
-import useSearchText from "../store/useSearchText";
+import useSearch from "../store/useSearch";
 import useRecipes from "../store/useRecipes";
 
 export default createComponent({
   name: "Hero",
   setup() {
-    const { searchText } = useSearchText();
+    const { searchText } = useSearch();
+
     const { filterCurrentRecipes } = useRecipes();
 
     function handleClick() {

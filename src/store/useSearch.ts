@@ -6,10 +6,10 @@ import { ref } from "@vue/composition-api";
 
 const searchText = ref<string>("");
 
-const useSearchText = () => {
+const useSearch = () => {
   return {
     searchText
   };
 };
 
-export default useSearchText;
+export default useSearch;
