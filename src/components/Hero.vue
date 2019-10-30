@@ -1,7 +1,7 @@
 <template>
   <!--Hero-->
   <div>
-    <div class="pt-24">
+    <div class="pt-24 pb-12">
       <div
         class="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center"
       >
@@ -22,7 +22,8 @@
             placeholder="余ってる食材は..."
           />
           <button
-            class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg"
+            class="mx-auto my-5 lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg"
+            @click="handleClick()"
           >
             検索
           </button>
@@ -79,13 +80,22 @@
 import Vue from "vue";
 import { createComponent } from "@vue/composition-api";
 import useSearchText from "../store/useSearchText";
+import useRecipes from "../store/useRecipes";
 
 export default createComponent({
   name: "Hero",
   setup() {
     const { searchText } = useSearchText();
+    const { filterCurrentRecipes } = useRecipes();
+
+    function handleClick() {
+      filterCurrentRecipes(searchText.value);
+    }
+
     return {
-      searchText
+      searchText,
+      filterCurrentRecipes,
+      handleClick
     };
   }
 });

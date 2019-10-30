@@ -1,10 +1,6 @@
 import Vue from "vue";
-import axios from "axios";
 import VueCompositionApi, { ref } from "@vue/composition-api";
 Vue.use(VueCompositionApi);
-
-import useLoader from "./useLoader";
-import domain from "../utils/domain";
 
 export type Recipe = {
   foodImageUrl: string;
@@ -35,10 +31,21 @@ const useRecipes = () => {
     allRecipes.value = recipes;
   };
 
+  const filterCurrentRecipes = (ingredient: string) => {
+    if (ingredient === "") {
+      currentRecipes.value =allRecipes.value;
+    } else {
+      currentRecipes.value = allRecipes.value.filter(recipe =>{
+        return recipe.recipeMaterial.includes(ingredient);
+      })
+    }
+  };
+
   return {
     allRecipes,
     currentRecipes,
     initRecipes,
+    filterCurrentRecipes
   };
 };
 
