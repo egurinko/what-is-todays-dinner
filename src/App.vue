@@ -1,36 +1,16 @@
 <template>
-  <div
-    class="leading-normal tracking-normal text-white gradient"
-    style="font-family: 'Source Sans Pro', sans-serif;"
-  >
-    <Header />
-    <Hero />
-    <Loader />
-    <Recipes />
-    <Emotion />
-    <Footer />
-  </div>
+  <Home />
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import { createComponent } from "@vue/composition-api";
-import Header from "./components/Header.vue";
-import Hero from "./components/Hero.vue";
-import Recipes from "./components/Recipes.vue";
-import Emotion from "./components/Emotion.vue";
-import Footer from "./components/Footer.vue";
-import Loader from "./components/Loader.vue";
+import Home from "./views/Home.vue";
 
 export default createComponent({
   name: "app",
   components: {
-    Loader,
-    Header,
-    Hero,
-    Recipes,
-    Emotion,
-    Footer
+    Home
   }
 });
 </script>

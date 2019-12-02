@@ -18,7 +18,7 @@ export type Recipe = {
   recipeUrl: string;
   mediumImageUrl: string;
   recipeTitle: string;
-}
+};
 
 export type Recipes = Recipe[];
 
@@ -33,11 +33,11 @@ const useRecipes = () => {
 
   const filterCurrentRecipes = (ingredient: string) => {
     if (ingredient === "") {
-      currentRecipes.value =allRecipes.value;
+      currentRecipes.value = allRecipes.value;
     } else {
-      currentRecipes.value = allRecipes.value.filter(recipe =>{
+      currentRecipes.value = allRecipes.value.filter(recipe => {
         return recipe.recipeMaterial.includes(ingredient);
-      })
+      });
     }
   };
 
