@@ -3,9 +3,8 @@
     class="leading-normal tracking-normal text-white gradient"
     style="font-family: 'Source Sans Pro', sans-serif;"
   >
-    <Header />
-    <Hero />
     <Loader />
+    <Header />
     <Recipes />
     <Emotion />
     <Footer />
@@ -16,7 +15,6 @@
 import Vue from "vue";
 import { createComponent } from "@vue/composition-api";
 import Header from "../components/Header.vue";
-import Hero from "../components/Hero.vue";
 import Recipes from "../components/Recipes.vue";
 import Emotion from "../components/Emotion.vue";
 import Footer from "../components/Footer.vue";
@@ -27,7 +25,6 @@ export default createComponent({
   components: {
     Loader,
     Header,
-    Hero,
     Recipes,
     Emotion,
     Footer

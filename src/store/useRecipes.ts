@@ -1,9 +1,7 @@
-import Vue from "vue";
 import axios from "axios";
-import VueCompositionApi, { ref, onMounted } from "@vue/composition-api";
+import { onMounted, reactive, toRefs, ref } from "@vue/composition-api";
 import useLoader from "./useLoader";
 import domain from "../utils/domain";
-Vue.use(VueCompositionApi);
 
 export type Recipe = {
   foodImageUrl: string;
@@ -25,47 +23,50 @@ export type Recipe = {
 
 export type Recipes = Recipe[];
 
-const useRecipes = () => {
-  const currentRecipes = ref<Recipes>([]);
-  const allRecipes = ref<Recipes>([]);
-  const searchText = ref<string>("");
+type RecipeState = {
+  recipes: Recipes;
+  searchText: string;
+};
 
-  const getRecipes = () => {
+export default function useRecipes() {
+  const recipeState: RecipeState = reactive({
+    recipes: [],
+    searchText: ""
+  });
+
+  const run = (): void => {
     const { changeToLoading, changeToLoaded } = useLoader();
     changeToLoading();
 
     axios
-      .get(`${domain}/api/recipes`)
+      .get(`${domain}/api/recipes`, {
+        params: {
+          searchText: recipeState.searchText
+        }
+      })
       .then(data => {
-        const result = data.data;
-        currentRecipes.value = result;
-        allRecipes.value = result;
+        addRecipes(data.data);
       })
       .finally(() => {
         changeToLoaded();
       });
   };
 
-  const filterCurrentRecipes = (ingredient: string) => {
-    if (ingredient === "") {
-      currentRecipes.value = allRecipes.value;
-    } else {
-      currentRecipes.value = allRecipes.value.filter(recipe => {
-        return recipe.recipeMaterial.includes(ingredient);
-      });
-    }
+  const addRecipes = (recipes: Recipes): void => {
+    recipeState.recipes = [...recipes];
+  };
+
+  const filterRecipes = (): void => {
+    run();
   };
 
   onMounted(() => {
-    getRecipes();
+    run();
   });
 
   return {
-    allRecipes,
-    currentRecipes,
-    getRecipes,
-    filterCurrentRecipes
+    ...toRefs(recipeState),
+    filterRecipes,
+    addRecipes
   };
-};
-
-export default useRecipes;
+}

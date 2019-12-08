@@ -14,7 +14,6 @@
           <p class="leading-normal text-2xl mb-8">
             献立を考えるのは大変です。相手を思いやりましょう。
           </p>
-
           <input
             class="w-full h-16 px-3 rounded mb-8 focus:outline-none focus:shadow-outline text-xl px-8 shadow-lg text-gray-800"
             type="search"
@@ -23,7 +22,7 @@
           />
           <button
             class="mx-auto my-5 lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg"
-            @click="handleClick()"
+            @click="filterRecipes"
           >
             検索
           </button>
@@ -77,26 +76,17 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import { createComponent } from "@vue/composition-api";
-import useSearch from "../store/useSearch";
 import useRecipes from "../store/useRecipes";
 
 export default createComponent({
   name: "Hero",
   setup() {
-    const { searchText } = useSearch();
-
-    const { filterCurrentRecipes } = useRecipes();
-
-    function handleClick() {
-      filterCurrentRecipes(searchText.value);
-    }
+    const { filterRecipes, searchText } = useRecipes();
 
     return {
       searchText,
-      filterCurrentRecipes,
-      handleClick
+      filterRecipes
     };
   }
 });
