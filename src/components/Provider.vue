@@ -6,12 +6,12 @@
 
 <script lang="ts">
 import { provide, createComponent } from "@vue/composition-api";
-import useRecipes, { RecipesKey } from "../store/useRecipes";
+import store, { StoreKey } from "../store";
 
 export default createComponent({
   name: "Recipes",
   setup() {
-    provide(RecipesKey, useRecipes());
+    provide(StoreKey, store());
     return {};
   }
 });

@@ -52,22 +52,33 @@
 </template>
 
 <script lang="ts">
-import { createComponent, inject } from "@vue/composition-api";
+import { createComponent, inject, onMounted } from "@vue/composition-api";
 import useRecipes from "../store/useRecipes";
 import useLoader from "../store/useLoader";
 import domain from "../utils/domain";
-import { RecipesKey } from "../store/useRecipes";
+import { StoreKey, Store } from "../store";
+import { recipe } from "../api/index";
 
 export default createComponent({
   name: "Recipes",
   setup() {
-    const useRecipes = inject(RecipesKey);
+    const store = inject(StoreKey);
+    if (!store) return;
 
-    if (useRecipes) {
-      return { recipes: useRecipes.recipes };
-    }
+    onMounted(async () => {
+      init(store);
+    });
+
+    return { recipes: store.recipes };
   }
 });
+
+const init = async (store: Store): Promise<void> => {
+  store.changeToLoading();
+  const data = await recipe.getRecipes(store.searchText.value);
+  store.addRecipes(data);
+  store.changeToLoaded();
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

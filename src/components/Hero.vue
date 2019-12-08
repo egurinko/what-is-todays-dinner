@@ -76,21 +76,33 @@
 
 <script lang="ts">
 import { createComponent, inject } from "@vue/composition-api";
-import { RecipesKey } from "../store/useRecipes";
+import { StoreKey } from "../store";
+import { recipe } from "../api/index";
+import { Store } from "../store";
 
 export default createComponent({
   name: "Hero",
   setup() {
-    const userRecipes = inject(RecipesKey);
+    const store = inject(StoreKey);
+    if (!store) return;
 
-    if (userRecipes) {
-      return {
-        filterRecipes: userRecipes.filterRecipes,
-        searchText: userRecipes.searchText
-      };
-    }
+    const filterRecipes = () => {
+      filter(store);
+    };
+
+    return {
+      filterRecipes,
+      searchText: store.searchText
+    };
   }
 });
+
+const filter = async (store: Store): Promise<void> => {
+  store.changeToLoading();
+  const data = await recipe.getRecipes(store.searchText.value);
+  store.addRecipes(data);
+  store.changeToLoaded();
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

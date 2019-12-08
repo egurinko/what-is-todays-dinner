@@ -3,10 +3,12 @@ import {
   onMounted,
   reactive,
   toRefs,
-  InjectionKey
+  InjectionKey,
+  inject
 } from "@vue/composition-api";
 import useLoader from "./useLoader";
 import domain from "../utils/domain";
+import { StoreKey } from "./index";
 
 export type Recipe = {
   foodImageUrl: string;
@@ -39,39 +41,12 @@ export default function useRecipes() {
     searchText: ""
   });
 
-  const run = (): void => {
-    const { changeToLoading, changeToLoaded } = useLoader();
-    changeToLoading();
-
-    axios
-      .get(`${domain}/api/recipes`, {
-        params: {
-          searchText: recipeState.searchText
-        }
-      })
-      .then(data => {
-        addRecipes(data.data);
-      })
-      .finally(() => {
-        changeToLoaded();
-      });
-  };
-
   const addRecipes = (recipes: Recipes): void => {
     recipeState.recipes = [...recipes];
   };
 
-  const filterRecipes = (): void => {
-    run();
-  };
-
-  onMounted(() => {
-    run();
-  });
-
   return {
     ...toRefs(recipeState),
-    filterRecipes,
     addRecipes
   };
 }

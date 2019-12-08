@@ -9,9 +9,10 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "@vue/composition-api";
+import { createComponent, inject } from "@vue/composition-api";
 import PacmanLoader from "vue-spinner/src/PacmanLoader.vue";
 import useLoader from "../store/useLoader";
+import { StoreKey } from "../store";
 
 export default createComponent({
   name: "Loader",
@@ -19,9 +20,11 @@ export default createComponent({
     PacmanLoader
   },
   setup() {
-    const { loading } = useLoader();
+    const store = inject(StoreKey);
+    if (!store) return;
+
     return {
-      loading
+      loading: store.loading
     };
   }
 });
