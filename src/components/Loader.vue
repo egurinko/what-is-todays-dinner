@@ -2,9 +2,9 @@
   <div
     class="main-modal fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster"
     style="background: rgba(0,0,0,.7);"
-    v-if="loader"
+    v-if="loading"
   >
-    <PacmanLoader :loading="loader" />
+    <PacmanLoader :loading="loading" />
   </div>
 </template>
 
@@ -19,9 +19,9 @@ export default createComponent({
     PacmanLoader
   },
   setup() {
-    const { loader } = useLoader();
+    const { loading } = useLoader();
     return {
-      loader
+      loading
     };
   }
 });

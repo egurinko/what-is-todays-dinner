@@ -1,18 +1,18 @@
 import { ref } from "@vue/composition-api";
 
-const loader = ref<boolean>(false);
+const loading = ref<boolean>(false);
 
 const useLoader = () => {
   const changeToLoading = () => {
-    loader.value = true;
+    loading.value = true;
   };
 
   const changeToLoaded = () => {
-    loader.value = false;
+    loading.value = false;
   };
 
   return {
-    loader,
+    loading,
     changeToLoading,
     changeToLoaded
   };
