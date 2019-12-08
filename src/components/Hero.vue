@@ -27,7 +27,6 @@
             検索
           </button>
         </div>
-        <!--Right Col-->
         <div class="w-full md:w-3/5 py-6 text-center">
           <img class="w-full md:w-4/5 z-50" src="../assets/hero.png" />
         </div>
@@ -76,18 +75,20 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "@vue/composition-api";
-import useRecipes from "../store/useRecipes";
+import { createComponent, inject } from "@vue/composition-api";
+import { RecipesKey } from "../store/useRecipes";
 
 export default createComponent({
   name: "Hero",
   setup() {
-    const { filterRecipes, searchText } = useRecipes();
+    const userRecipes = inject(RecipesKey);
 
-    return {
-      searchText,
-      filterRecipes
-    };
+    if (userRecipes) {
+      return {
+        filterRecipes: userRecipes.filterRecipes,
+        searchText: userRecipes.searchText
+      };
+    }
   }
 });
 </script>

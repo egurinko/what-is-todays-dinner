@@ -1,5 +1,10 @@
 import axios from "axios";
-import { onMounted, reactive, toRefs, ref } from "@vue/composition-api";
+import {
+  onMounted,
+  reactive,
+  toRefs,
+  InjectionKey
+} from "@vue/composition-api";
 import useLoader from "./useLoader";
 import domain from "../utils/domain";
 
@@ -70,3 +75,6 @@ export default function useRecipes() {
     addRecipes
   };
 }
+
+export type UseRecipes = ReturnType<typeof useRecipes>;
+export const RecipesKey: InjectionKey<UseRecipes> = Symbol("UseRecipes");

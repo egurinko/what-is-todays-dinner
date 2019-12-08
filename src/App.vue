@@ -1,15 +1,19 @@
 <template>
-  <Home />
+  <Provider>
+    <Home />
+  </Provider>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import { createComponent } from "@vue/composition-api";
 import Home from "./views/Home.vue";
+import Provider from "./components/Provider.vue";
 
 export default createComponent({
   name: "app",
   components: {
+    Provider,
     Home
   }
 });
