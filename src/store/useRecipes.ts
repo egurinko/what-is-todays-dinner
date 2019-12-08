@@ -1,14 +1,4 @@
-import axios from "axios";
-import {
-  onMounted,
-  reactive,
-  toRefs,
-  InjectionKey,
-  inject
-} from "@vue/composition-api";
-import useLoader from "./useLoader";
-import domain from "../utils/domain";
-import { StoreKey } from "./index";
+import { reactive, toRefs, InjectionKey } from "@vue/composition-api";
 
 export type Recipe = {
   foodImageUrl: string;

@@ -1,8 +1,8 @@
 import { ref, InjectionKey } from "@vue/composition-api";
 
-const loading = ref<boolean>(false);
-
 const useLoader = () => {
+  const loading = ref<boolean>(false);
+
   const changeToLoading = () => {
     loading.value = true;
   };

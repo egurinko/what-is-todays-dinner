@@ -48,6 +48,14 @@
         </div>
       </div>
     </div>
+    <div class="container mx-auto pt-4 pb-12">
+      <Pagination
+        :pagination="pagination"
+        @setCurrentPage="pagination.setCurrentPage($event)"
+        @goPreviousPage="pagination.goPreviousPage()"
+        @goNextPage="pagination.goNextPage()"
+      />
+    </div>
   </section>
 </template>
 
@@ -58,26 +66,72 @@ import useLoader from "../store/useLoader";
 import domain from "../utils/domain";
 import { StoreKey, Store } from "../store";
 import { recipe } from "../api/index";
+import Pagination from "./Pagination.vue";
 
 export default createComponent({
   name: "Recipes",
+  components: {
+    Pagination
+  },
   setup() {
     const store = inject(StoreKey);
     if (!store) return;
 
     onMounted(async () => {
-      init(store);
+      run(store);
     });
 
-    return { recipes: store.recipes };
+    const setCurrentPage = (e: number) => {
+      set(e, store);
+    };
+
+    const goPreviousPage = () => {
+      goPriv(store);
+    };
+
+    const goNextPage = () => {
+      goNext(store);
+    };
+
+    return {
+      recipes: store.recipes,
+      pagination: {
+        setCurrentPage,
+        goPreviousPage,
+        goNextPage,
+        currentPage: store.currentPage,
+        lastPage: store.lastPage,
+        total: store.total.value
+      }
+    };
   }
 });
 
-const init = async (store: Store): Promise<void> => {
+const run = async (store: Store): Promise<void> => {
   store.changeToLoading();
-  const data = await recipe.getRecipes(store.searchText.value);
-  store.addRecipes(data);
+  const data = await recipe.getRecipes(
+    store.searchText.value,
+    store.currentPage.value
+  );
+  store.addRecipes(data.data);
+  store.setCurrentPage(data.pageInfo.currentPage);
+  store.setTotalPage(data.pageInfo.total);
   store.changeToLoaded();
+};
+
+const set = (e: number, store: Store): void => {
+  store.setCurrentPage(e);
+  run(store);
+};
+
+const goPriv = (store: Store): void => {
+  store.setCurrentPage(store.currentPage.value - 1);
+  run(store);
+};
+
+const goNext = (store: Store): void => {
+  store.setCurrentPage(store.currentPage.value + 1);
+  run(store);
 };
 </script>
 

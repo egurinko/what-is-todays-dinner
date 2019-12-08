@@ -100,7 +100,9 @@ export default createComponent({
 const filter = async (store: Store): Promise<void> => {
   store.changeToLoading();
   const data = await recipe.getRecipes(store.searchText.value);
-  store.addRecipes(data);
+  store.addRecipes(data.data);
+  store.setCurrentPage(data.pageInfo.currentPage);
+  store.setTotalPage(data.pageInfo.total);
   store.changeToLoaded();
 };
 </script>
