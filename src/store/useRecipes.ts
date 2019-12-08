@@ -1,5 +1,8 @@
 import Vue from "vue";
-import VueCompositionApi, { ref } from "@vue/composition-api";
+import axios from "axios";
+import VueCompositionApi, { ref, onMounted } from "@vue/composition-api";
+import useLoader from "./useLoader";
+import domain from "../utils/domain";
 Vue.use(VueCompositionApi);
 
 export type Recipe = {
@@ -22,13 +25,25 @@ export type Recipe = {
 
 export type Recipes = Recipe[];
 
-const currentRecipes = ref<Recipes>([]);
-const allRecipes = ref<Recipes>([]);
-
 const useRecipes = () => {
-  const initRecipes = (recipes: Recipes) => {
-    currentRecipes.value = recipes;
-    allRecipes.value = recipes;
+  const currentRecipes = ref<Recipes>([]);
+  const allRecipes = ref<Recipes>([]);
+  const searchText = ref<string>("");
+
+  const getRecipes = () => {
+    const { changeToLoading, changeToLoaded } = useLoader();
+    changeToLoading();
+
+    axios
+      .get(`${domain}/api/recipes`)
+      .then(data => {
+        const result = data.data;
+        currentRecipes.value = result;
+        allRecipes.value = result;
+      })
+      .finally(() => {
+        changeToLoaded();
+      });
   };
 
   const filterCurrentRecipes = (ingredient: string) => {
@@ -41,10 +56,14 @@ const useRecipes = () => {
     }
   };
 
+  onMounted(() => {
+    getRecipes();
+  });
+
   return {
     allRecipes,
     currentRecipes,
-    initRecipes,
+    getRecipes,
     filterCurrentRecipes
   };
 };

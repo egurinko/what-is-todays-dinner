@@ -63,32 +63,13 @@ export default createComponent({
   name: "Recipes",
   components: {},
   setup() {
-    const { currentRecipes, initRecipes } = useRecipes();
-
-    onMounted(() => {
-      init();
-    });
+    const { currentRecipes, getRecipes } = useRecipes();
 
     return {
       currentRecipes
     };
   }
 });
-
-const init = () => {
-  const { changeToLoading, changeToLoaded } = useLoader();
-  const { initRecipes } = useRecipes();
-
-  changeToLoading();
-  axios
-    .get(`${domain}/api/recipes`)
-    .then(data => {
-      initRecipes(data.data);
-    })
-    .finally(() => {
-      changeToLoaded();
-    });
-};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
