@@ -1,10 +1,8 @@
 import Vue from "vue";
-import VueCompositionApi from "@vue/composition-api";
-
-Vue.use(VueCompositionApi);
+import "./utils/compositionPlugin";
+import "@/assets/css/tailwind.css";
 
 import App from "./App.vue";
-import "@/assets/css/tailwind.css";
 
 Vue.config.productionTip = false;
 

@@ -9,7 +9,6 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import { createComponent } from "@vue/composition-api";
 import PacmanLoader from "vue-spinner/src/PacmanLoader.vue";
 import useLoader from "../store/useLoader";
