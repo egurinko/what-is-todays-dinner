@@ -21,7 +21,7 @@ module.exports = async searchText => {
     }
 
     client.close();
-    return spliced;
+    return data;
   } catch (err) {
     console.log(err);
   }
