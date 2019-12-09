@@ -14,7 +14,7 @@
     <div
       v-if="
         pagination.currentPage.value + 1 < pagination.lastPage.value &&
-          pagination.total > 20
+          pagination.total.value > 20
       "
     >
       <a class="mx-1" href="#" @click.prevent="$emit('goNextPage')">{{

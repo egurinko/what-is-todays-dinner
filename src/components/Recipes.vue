@@ -49,6 +49,7 @@
       </div>
     </div>
     <div class="container mx-auto pt-4 pb-12">
+      {{ pagination.currentPage.value }}
       <Pagination
         :pagination="pagination"
         @setCurrentPage="pagination.setCurrentPage($event)"
@@ -101,7 +102,7 @@ export default createComponent({
         goNextPage,
         currentPage: store.currentPage,
         lastPage: store.lastPage,
-        total: store.total.value
+        total: store.total
       }
     };
   }

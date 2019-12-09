@@ -14,25 +14,28 @@ module.exports = async (searchText, currentPage) => {
     const db = client.db(config.db.dbName);
 
     let find = {};
+    let data = [];
+    let total = 0;
 
     if (searchText === "") {
-      find = await db
-        .collection("recipes")
-        .find()
-        .skip((currentPage - 1) * NUMBER_OF_ITEMS)
-        .limit(NUMBER_OF_ITEMS);
-    } else {
-      find = await db
-        .collection("recipes")
-        .find({
-          recipeMaterial: { $all: [searchText] }
-        })
-        .skip((currentPage - 1) * NUMBER_OF_ITEMS)
-        .limit(NUMBER_OF_ITEMS);
-    }
+      find = await db.collection("recipes").find();
+      total = await find.count();
 
-    let data = await find.toArray();
-    const total = await db.collection("recipes").countDocuments();
+      data = await find
+        .skip((currentPage - 1) * NUMBER_OF_ITEMS)
+        .limit(NUMBER_OF_ITEMS)
+        .toArray();
+    } else {
+      find = await db.collection("recipes").find({
+        recipeMaterial: { $all: [searchText] }
+      });
+      total = await find.count();
+
+      data = await find
+        .skip((currentPage - 1) * NUMBER_OF_ITEMS)
+        .limit(NUMBER_OF_ITEMS)
+        .toArray();
+    }
 
     client.close();
     return {
