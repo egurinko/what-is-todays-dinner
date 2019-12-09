@@ -7,7 +7,7 @@ type PageState = {
 
 export default function usePagination() {
   const pageState: PageState = reactive({
-    perPage: 20,
+    perPage: 12,
     total: 1
   });
 
