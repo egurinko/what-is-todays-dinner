@@ -101,7 +101,6 @@ const filter = async (store: Store): Promise<void> => {
   store.changeToLoading();
   const data = await recipe.getRecipes(store.searchText.value);
   store.addRecipes(data.data);
-  console.log(data.pageInfo);
   store.setCurrentPage(data.pageInfo.currentPage);
   store.setTotalPage(data.pageInfo.total);
   store.changeToLoaded();
