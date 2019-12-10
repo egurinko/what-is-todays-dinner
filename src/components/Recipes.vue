@@ -12,7 +12,7 @@
         ></div>
       </div>
       <div
-        class="w-full md:w-1/3 p-6 flex flex-col flex-shrink"
+        class="w-full md:w-1/3 p-6 flex flex-col flex-shrink recipe-card"
         v-for="(recipe, index) in recipes"
         :key="index"
       >
@@ -68,6 +68,7 @@ import domain from "../utils/domain";
 import { StoreKey, Store } from "../store";
 import { recipe } from "../api/index";
 import Pagination from "./Pagination.vue";
+import gsap from "gsap";
 
 export default createComponent({
   name: "Recipes",
@@ -79,7 +80,15 @@ export default createComponent({
     if (!store) return;
 
     onMounted(async () => {
-      run(store);
+      await run(store);
+
+      gsap.from(".recipe-card", {
+        duration: 0.5,
+        opacity: 0,
+        y: 100,
+        ease: "power1",
+        stagger: 0.1
+      });
     });
 
     const setCurrentPage = (e: number) => {
