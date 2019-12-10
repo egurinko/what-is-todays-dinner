@@ -4,7 +4,7 @@ const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
 const parser = { useNewUrlParser: true, useUnifiedTopology: true };
 
-const NUMBER_OF_ITEMS = 12;
+const NUMBER_OF_ITEMS = 9;
 
 module.exports = async (searchText, currentPage) => {
   const client = MongoClient(config.db.mongoURL, parser);
