@@ -75,19 +75,26 @@
 </template>
 
 <script lang="ts">
-import { createComponent, inject } from "@vue/composition-api";
+import { createComponent, inject, onMounted } from "@vue/composition-api";
 import { StoreKey } from "../store";
 import { recipe } from "../api/index";
 import { Store } from "../store";
+import useScrollMagic from "../store/useScrollMagic";
 
 export default createComponent({
   name: "Hero",
   setup() {
     const store = inject(StoreKey);
     if (!store) return;
+    const { addScrollToElementId, scrollToElement } = useScrollMagic();
 
-    const filterRecipes = () => {
-      filter(store);
+    onMounted(async () => {
+      addScrollToElementId("#recipe-section");
+    });
+
+    const filterRecipes = async () => {
+      await filter(store);
+      scrollToElement();
     };
 
     return {

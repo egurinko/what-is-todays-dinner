@@ -1,6 +1,9 @@
 <template>
-  <section class="bg-white border-b py-8">
-    <div class="container mx-auto flex flex-wrap pt-4 pb-12">
+  <section class="bg-white border-b py-8" id="recipe-section">
+    <div
+      class="container mx-auto flex flex-wrap pt-4 pb-12"
+      id="recipe-container"
+    >
       <h1
         class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800"
       >
@@ -68,6 +71,7 @@ import domain from "../utils/domain";
 import { StoreKey, Store } from "../store";
 import { recipe } from "../api/index";
 import Pagination from "./Pagination.vue";
+import useScrollMagic from "../store/useScrollMagic";
 
 export default createComponent({
   name: "Recipes",
@@ -78,20 +82,32 @@ export default createComponent({
     const store = inject(StoreKey);
     if (!store) return;
 
+    const {
+      addFadeOnElementId,
+      addScrollToElementId,
+      scrollToElement
+    } = useScrollMagic();
+
     onMounted(async () => {
       run(store);
+
+      addFadeOnElementId("#recipe-container");
+      addScrollToElementId("#recipe-section");
     });
 
-    const setCurrentPage = (e: number) => {
-      set(e, store);
+    const setCurrentPage = async (e: number) => {
+      await set(e, store);
+      scrollToElement();
     };
 
     const goPreviousPage = () => {
       goPriv(store);
+      scrollToElement();
     };
 
     const goNextPage = () => {
       goNext(store);
+      scrollToElement();
     };
 
     return {
@@ -137,4 +153,12 @@ const goNext = (store: Store): void => {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="stylus"></style>
+<style scoped lang="stylus">
+#recipe-container
+  opacity: 0
+  transition: all 0.8s
+  transition-timing-function: ease-in;
+#recipe-container.show
+  opacity: 1
+  transform: translateY(20px);
+</style>

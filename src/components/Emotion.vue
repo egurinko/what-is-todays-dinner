@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="bg-gray-100 border-b py-8">
-      <div class="container max-w-5xl mx-auto m-8">
+      <div class="container max-w-5xl mx-auto m-8" id="emotion-container">
         <h1
           class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800"
         >
@@ -146,12 +146,32 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "@vue/composition-api";
+import { createComponent, onMounted } from "@vue/composition-api";
+import useScrollMagic from "../store/useScrollMagic";
 
 export default createComponent({
-  name: "Recipes"
+  name: "Recipes",
+  setup() {
+    const {
+      addFadeOnElementId,
+      addScrollToElementId,
+      scrollToElement
+    } = useScrollMagic();
+
+    onMounted(async () => {
+      addFadeOnElementId("#emotion-container");
+    });
+  }
 });
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="stylus"></style>
+<style scoped lang="stylus">
+#emotion-container
+  opacity: 0
+  transition: all 0.8s
+  transition-timing-function: ease-in;
+#emotion-container.show
+  opacity: 1
+  transform: translateY(10px);
+</style>
