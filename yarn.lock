@@ -817,6 +817,11 @@
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
   integrity sha512-ce5d3q03Ex0sy4R14722Rmt6MT07Ua+k4FwDfdcToYJcMKNtRVQvJ6JCAPdAmAnbRb6CsX6aYb9m96NGod9uTw==
 
+"@types/smooth-scroll@^16.1.0":
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/@types/smooth-scroll/-/smooth-scroll-16.1.0.tgz#903859ef225dc6cdbfa0bde4406ef539d7a5a7f7"
+  integrity sha512-7vcLoVwdalVHBjVoPVzBISN8mHx7oqPOXyTgkXb3OVRgjdeed27TqRc5+D1sub5QozNfJ9SStbR/Kpf0TxXTKQ==
+
 "@types/vue-router@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/vue-router/-/vue-router-2.0.0.tgz#81094f2107e766a11b20af7fa0f34bec1f321e28"
@@ -7698,6 +7703,11 @@ slice-ansi@^2.1.0:
     ansi-styles "^3.2.0"
     astral-regex "^1.0.0"
     is-fullwidth-code-point "^2.0.0"
+
+smooth-scroll@^16.1.0:
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/smooth-scroll/-/smooth-scroll-16.1.0.tgz#c811c63db67215d30847745ba0732feb3291947f"
+  integrity sha512-V5b8ekIekZ3xJ6f0sPsLgEbN5YT8gX0Q6yNjZXTKgqjH9dBGadZ0P50fhP0rLRBGifc44qfI3rnWNM+lebhJag==
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
